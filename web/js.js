@@ -131,13 +131,12 @@ $(document).ready(function(){
     function updatehud(type, value) {
         const element = document.getElementById(type);
         const parent = element.parentNode;
-    
-        // Zapewnienie, że wartość nie będzie ujemna
+
         if (value < 0) {
             value = 0;
         }
     
-        // Obsługa typu "shields" lub "mics"
+
         if (type === "shields" || type === "mics") {
             if (value > 0) {
                 if (value > 95) {
@@ -151,7 +150,7 @@ $(document).ready(function(){
                 }
             }
         } 
-        // Obsługa typu "oxygens"
+
         else if (type === "oxygens") {
             if (value === 100) {
                 hidehud(type);
@@ -159,7 +158,7 @@ $(document).ready(function(){
                 showhud(type);
             }
         }
-        // Obsługa innych typów
+
         else {
             if (showmax || value < 95) {
                 showhud(type);
@@ -169,7 +168,7 @@ $(document).ready(function(){
 
         }
 
-        // Ustawienie wysokości elementu w zależności od wartości
+
         element.style.height = parseInt(maxvaluehud) * (value / 100) + "px";
     }
     
@@ -387,11 +386,11 @@ $(document).ready(function(){
             
                 components: {
             
-                    // Main components
+
                     preview: true,
                     hue: true,
             
-                    // Input / output Options
+  
         
                 }
             });
@@ -420,11 +419,11 @@ $(document).ready(function(){
             
                 components: {
             
-                    // Main components
+
                     preview: true,
                     hue: true,
             
-                    // Input / output Options
+
         
                 }
             });
