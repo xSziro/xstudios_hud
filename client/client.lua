@@ -115,6 +115,7 @@ end
 
 function hidehud()
     hidden = true
+    print("hidden hud")
     SendNUIMessage({
         type = "hidehud",
     })
@@ -133,6 +134,7 @@ AddEventHandler('esx:pauseMenuActive', function(isActive)
 end)
 
 function showhud()
+    print("shown hud")
 
     hidden = false
     SendNUIMessage({
@@ -163,6 +165,7 @@ local voiceModes = {}
 local usingRadio = false
 RegisterNetEvent('xstudios_uipack:opensettings')
 AddEventHandler('xstudios_uipack:opensettings', function(data)
+        showhud()
         SetNuiFocus(true,true)
         SendNUIMessage({
             type = "opensettings",
@@ -197,6 +200,7 @@ AddEventHandler('esx_status:onTick', function(data)
 
     ESX.TriggerServerCallback('xstudios_uipack:getcolor', function(color,icon,position)
         if hudcolor ~= color or iconcolor ~= icon then
+            print(color,icon,position)
             hudcolor = color
             iconcolor = icon
             hudpos = position

@@ -5,8 +5,8 @@ $(document).ready(function(){
     var maxcarvaluehud = $("#fuels").css("height")
     let currentDeg = 0;
     var hidden = true 
-    var color = "#00FFFF"
-    var iconcolor = "#000000"
+    var color = "0"
+    var iconcolor = "0"
     var showmax = false
     var position = 0
     var incar = false
@@ -23,7 +23,7 @@ $(document).ready(function(){
         }else{
             document.getElementById("main").style.bottom = "0.4%"
         }
-        $.post('https://xstudios_uipack/changepos', JSON.stringify({pos:0}));
+        $.post(`https://${GetParentResourceName()}/changepos`, JSON.stringify({pos:0}));
         
     })
     document.getElementById("position2").addEventListener("click",function () {
@@ -37,12 +37,12 @@ $(document).ready(function(){
         position = 1
 
 
-        $.post('https://xstudios_uipack/changepos', JSON.stringify({pos:1}));
+        $.post(`https://${GetParentResourceName()}/changepos`, JSON.stringify({pos:1}));
         
     })
     document.getElementById("apply").addEventListener("click",function () {
         document.getElementById("setting").style.display = "none"
-        $.post('https://xstudios_uipack/closesettings', JSON.stringify({}));
+        $.post(`https://${GetParentResourceName()}/closesettings`, JSON.stringify({}));
         
     })
     document.getElementById("showfull").addEventListener("click",function () {
@@ -131,12 +131,13 @@ $(document).ready(function(){
     function updatehud(type, value) {
         const element = document.getElementById(type);
         const parent = element.parentNode;
-
+    
+        // Zapewnienie, że wartość nie będzie ujemna
         if (value < 0) {
             value = 0;
         }
     
-
+        // Obsługa typu "shields" lub "mics"
         if (type === "shields" || type === "mics") {
             if (value > 0) {
                 if (value > 95) {
@@ -150,7 +151,7 @@ $(document).ready(function(){
                 }
             }
         } 
-
+        // Obsługa typu "oxygens"
         else if (type === "oxygens") {
             if (value === 100) {
                 hidehud(type);
@@ -158,7 +159,7 @@ $(document).ready(function(){
                 showhud(type);
             }
         }
-
+        // Obsługa innych typów
         else {
             if (showmax || value < 95) {
                 showhud(type);
@@ -168,7 +169,7 @@ $(document).ready(function(){
 
         }
 
-
+        // Ustawienie wysokości elementu w zależności od wartości
         element.style.height = parseInt(maxvaluehud) * (value / 100) + "px";
     }
     
@@ -265,6 +266,7 @@ $(document).ready(function(){
         } else if(data.type == "showhud"){
             if (hidden) {
                 hidden = false
+                console.log("aa")
                 $("#hud").css("display", "flex")
                 setTimeout(() => {
                     $("#main").css("right", "0.5vw");
@@ -328,6 +330,7 @@ $(document).ready(function(){
             position = data.hudposition
             document.getElementById("belticon").style.fill = iconcolor
 
+            console.log(position)
             if (position == 0) {
                 document.getElementById("position1").checked = true
                 document.getElementById("position2").checked = false
@@ -342,7 +345,7 @@ $(document).ready(function(){
                 }else{
                     document.getElementById("main").style.bottom = "0.4%"
                 }
-                $.post('https://xstudios_uipack/changepos', JSON.stringify({pos:0}));
+                $.post(`https://${GetParentResourceName()}/changepos`, JSON.stringify({pos:0}));
 
             }else if (position == 1) {
                 document.getElementById("position1").checked = false
@@ -359,7 +362,7 @@ $(document).ready(function(){
                 position = 1
         
         
-                $.post('https://xstudios_uipack/changepos', JSON.stringify({pos:1}));
+                $.post(`https://${GetParentResourceName()}/changepos`, JSON.stringify({pos:1}));
                 
             }
             document.body.style.color = iconcolor
@@ -386,11 +389,11 @@ $(document).ready(function(){
             
                 components: {
             
-
+                    // Main components
                     preview: true,
                     hue: true,
             
-  
+                    // Input / output Options
         
                 }
             });
@@ -407,7 +410,7 @@ $(document).ready(function(){
                     const element = colored[index];
                     element.style.backgroundColor = selectedColor
                 }
-                $.post('https://xstudios_uipack/event', JSON.stringify({color:selectedColor}));
+                $.post(`https://${GetParentResourceName()}/event`, JSON.stringify({color:selectedColor}));
             });
             const pickr2 = Pickr.create({
                 el: '#icon-color-picker-container',
@@ -419,11 +422,11 @@ $(document).ready(function(){
             
                 components: {
             
-
+                    // Main components
                     preview: true,
                     hue: true,
             
-
+                    // Input / output Options
         
                 }
             });
@@ -432,7 +435,8 @@ $(document).ready(function(){
                 color = selectedColor
                 document.body.style.color = color
                 document.getElementById("belticon").style.fill = color
-                $.post('https://xstudios_uipack/icon-event', JSON.stringify({color:selectedColor}));
+                console.log(GetParentResourceName())
+                $.post(`https://${GetParentResourceName()}/icon-event`, JSON.stringify({color:selectedColor}));
             });
         }else if(data.type == "opensettings"){
             if(data.open){
