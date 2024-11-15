@@ -25,7 +25,7 @@ function loadLocale(lang)
         Citizen.CreateThread(function ()
             while true do
                 Citizen.Wait(1000)
-                print("#-------xStudios-uipack-------#")
+                print("#---------xSziro-HUD----------#")
                 print("| Language has not been found |")
                 print("#-----------------------------#")
             end
